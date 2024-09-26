@@ -39,7 +39,7 @@ const handler = (request, response) => {
     // Se o retorno for 404 irá enviar a responsta 'Não existe ou não encontrado'    
     } else {
         response.writeHead(404, { 'Content-Type': 'text/plain' });
-        response.end('Não existe ou não encontrado');
+        response.end('Nao existe ou nao encontrado');
     }
 };
 

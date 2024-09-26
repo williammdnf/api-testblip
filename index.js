@@ -28,8 +28,20 @@ const handler = (request, response) => {
             });
 
             githubRes.on('end', () => {
+                const repos = JSON.parse(data); // Converte para JSON
+                
+                // Filtra os repositórios que possuem a linguagem "C#"
+                const filteredRepos = repos.filter(repo => repo.language === 'C#');
+                
+                // Ordena os repositórios pela data de criação (mais antigos primeiro)
+                const sortedRepos = filteredRepos.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+
+                // Pega os 5 mais antigos
+                const top5Oldest = sortedRepos.slice(0, 5);
+
+                // Retorna os 5 repositórios mais antigos em formato JSON
                 response.writeHead(200, { 'Content-Type': 'application/json' });
-                response.end(data);
+                response.end(JSON.stringify(top5Oldest));
             });
 
         }).on('error', (err) => {
